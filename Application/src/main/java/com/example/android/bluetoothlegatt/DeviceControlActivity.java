@@ -66,6 +66,7 @@ public class DeviceControlActivity extends Activity {
     private final String LIST_NAME = "NAME";
     private final String LIST_UUID = "UUID";
     public Button button2;
+    public Button button;
 
     // Code to manage Service lifecycle.
     private final ServiceConnection mServiceConnection = new ServiceConnection() {
@@ -160,7 +161,9 @@ public class DeviceControlActivity extends Activity {
 //        setContentView(R.layout.gatt_services_characteristics);
         setContentView(R.layout.sender_receiver);
         button2 = findViewById(R.id.button2);
-        button2.setOnClickListener(mCorkyListener);
+        button2.setOnClickListener(readClickListener);
+        button = findViewById(R.id.button);
+        button.setOnClickListener(writeClickListener);
 
         final Intent intent = getIntent();
         mDeviceName = intent.getStringExtra(EXTRAS_DEVICE_NAME);
@@ -320,20 +323,18 @@ public class DeviceControlActivity extends Activity {
 //            mBluetoothLeService.writeCustomCharacteristic(1111);
 //        }
 //    }
-
-    public void onClickRead(View v){
-        if(mBluetoothLeService != null) {
-            mBluetoothLeService.readCustomCharacteristic();
-        }
-    }
-
-    private View.OnClickListener mCorkyListener = new View.OnClickListener() {
+    private View.OnClickListener writeClickListener = new View.OnClickListener() {
         public void onClick(View v) {
-            // do something when the button is clicked
-            // Yes we will handle click here but which button clicked??? We don't know
-            Log.i("teststttttttttttt", "heeeeeeeuuuuuu");
+            if (mBluetoothLeService != null) {
+                mBluetoothLeService.write_UART_TX_Characteristic("HOLA! 111");
+            }
+        }
+    };
+
+    private View.OnClickListener readClickListener = new View.OnClickListener() {
+        public void onClick(View v) {
             if(mBluetoothLeService != null) {
-                mBluetoothLeService.writeCustomCharacteristic("fdfdfd000");
+                mBluetoothLeService.read_UART_RX_Characteristic();
             }
 
         }
