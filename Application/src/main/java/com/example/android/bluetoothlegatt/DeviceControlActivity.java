@@ -326,7 +326,7 @@ public class DeviceControlActivity extends Activity {
     private View.OnClickListener writeClickListener = new View.OnClickListener() {
         public void onClick(View v) {
             if (mBluetoothLeService != null) {
-                mBluetoothLeService.write_UART_TX_Characteristic("HOLA! 111");
+                mBluetoothLeService.write_UART_TX_Characteristic("1");
             }
         }
     };
